@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="stylesheet" href="../css/login.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Login</title>
+    
+    <!-- Adicionando reCAPTCHA Enterprise -->
+    <script src="https://www.google.com/recaptcha/enterprise.js?render=6Lda8E8qAAAAANkheZFQ_QJOUyUAN57bTvNt1ISD"></script>
+</head>
+<body>
+    <div class="login-page-info">
+        <p>Faça login ou crie uma conta para ver as últimas notícias sobre jogos!</p>
+    </div>
+
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="login-form" onsubmit="onSubmit(event)">
+            <input type="text" id="username" name="username" placeholder="Nome de usuário" required>
+            <input type="password" id="password" name="password" placeholder="Senha" required>
+
+            <button type="submit">Entrar</button>
+        </form>
+
+        <!-- Opção de recuperar senha -->
+        <div class="forgot-password">
+            <a href="http://127.0.0.1:5500/RetroGames-main/project1/assets/pages/esquecisenha.html">Esqueceu a senha?</a>
+        </div>
+
+        <!-- Opção de criar conta -->
+        <div class="create-account">
+            <p>Não tem uma conta? <a href="http://127.0.0.1:5500/RetroGames-main/project1/assets/pages/criarconta.html">Criar conta</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Função para validar o login com o reCAPTCHA Enterprise
+        function onSubmit(event) {
+            event.preventDefault();  // Impede o envio do formulário imediatamente
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            grecaptcha.enterprise.ready(async () => {
+                const token = await grecaptcha.enterprise.execute('6Lda8E8qAAAAANkheZFQ_QJOUyUAN57bTvNt1ISD', { action: 'LOGIN' });
+                
+                // Verificar o token e realizar o login
+                if (username === 'usuario' && password === 'senha') {
+                    // Aqui você pode enviar o token para o servidor junto com o login para validação
+                    alert('Login bem-sucedido!');
+                    window.location.href = 'http://127.0.0.1:5500/RetroGames-main/project1/assets/pages/menuJogos.html'; // Redireciona após login
+                } else {
+                    alert('Nome de usuário ou senha incorretos.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
